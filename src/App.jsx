@@ -194,141 +194,160 @@ export default function App() {
   }
 
   return (
-    <div className="app">
-      <h1>Cubie</h1>
-      <p className="subtitle">
-        Modello del cubo di Rubik e solver dei sottogruppi (Two-Generator,
-        Slice, Anti-Slice, Square), porting fedele da Cubie.java di Jaap
-        Scherphuis.
-      </p>
-      <a
-        href="https://www.jaapsch.net/puzzles/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Jaap Scherphuis
-      </a>
+    <main>
+      <div className="app">
+        <h1>Cubie</h1>
+        <p className="subtitle">
+          Modello del cubo di Rubik e solver dei sottogruppi (Two-Generator,
+          Slice, Anti-Slice, Square), porting fedele da Cubie.java di Jaap
+          Scherphuis.
+        </p>
+        <a
+          href="https://www.jaapsch.net/puzzles/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Jaap Scherphuis
+        </a>
 
-      <div className="layout">
-        <div className="panel">
-          <div className="view-toggle">
-            <button
-              type="button"
-              className={viewMode === "3d" ? "active" : ""}
-              onClick={() => setViewMode("3d")}
-            >
-              3D
-            </button>
-            <button
-              type="button"
-              className={viewMode === "2d" ? "active" : ""}
-              onClick={() => setViewMode("2d")}
-            >
-              Net 2D
-            </button>
-          </div>
-          {viewMode === "3d" ? (
-            <Cube3D faceletColor={faceletColor} animation={animation} />
-          ) : (
-            <CubeNet faceletColor={faceletColor} />
-          )}
-
-          <div className="moves">
-            {FACE_NAMES.map((name, idx) => (
-              <div className="move-group" key={name}>
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() => applyMove(idx, 1)}
-                >
-                  {name}
-                </button>
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() => applyMove(idx, 3)}
-                >
-                  {name}&apos;
-                </button>
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() => applyMove(idx, 2)}
-                >
-                  {name}2
-                </button>
-              </div>
-            ))}
-          </div>
-          <button
-            type="button"
-            className="reset"
-            disabled={busy}
-            onClick={handleReset}
-          >
-            Azzera cubo
-          </button>
-        </div>
-
-        <div className="panel">
-          <label className="field">
-            Sottogruppo / solver:
-            <select
-              value={solverKey}
-              onChange={(e) => {
-                setSolverKey(e.target.value);
-                setSolutionText("");
-                setLastSequence(null);
-              }}
-            >
-              {Object.entries(SOLVER_DEFS).map(([key, def]) => (
-                <option key={key} value={key}>
-                  {def.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label className="field checkbox">
-            <input
-              type="checkbox"
-              checked={superGroup}
-              disabled={!SOLVER_DEFS[solverKey].subgroup}
-              onChange={(e) => {
-                setSuperGroup(e.target.checked);
-                setSolutionText("");
-                setLastSequence(null);
-              }}
-            />
-            Super gruppo (considera l&apos;orientamento dei centri)
-          </label>
-
-          <div className="actions">
-            <button type="button" onClick={handleMix} disabled={busy}>
-              Mescola nel sottogruppo
-            </button>
-            <button type="button" onClick={handleSolve} disabled={busy}>
-              Risolvi
-            </button>
-            <button
-              type="button"
-              onClick={handleApplySolution}
-              disabled={busy || !lastSequence}
-            >
-              Applica soluzione
-            </button>
-          </div>
-
-          <p className="status">{status}</p>
-
-          {solutionText && (
-            <div className="solution">
-              <strong>Sequenza:</strong>
-              <div className="solution-text">{solutionText}</div>
+        <div className="layout">
+          <div className="panel">
+            <div className="view-toggle">
+              <button
+                type="button"
+                className={viewMode === "3d" ? "active" : ""}
+                onClick={() => setViewMode("3d")}
+              >
+                3D
+              </button>
+              <button
+                type="button"
+                className={viewMode === "2d" ? "active" : ""}
+                onClick={() => setViewMode("2d")}
+              >
+                Net 2D
+              </button>
             </div>
-          )}
+            {viewMode === "3d" ? (
+              <Cube3D faceletColor={faceletColor} animation={animation} />
+            ) : (
+              <CubeNet faceletColor={faceletColor} />
+            )}
+
+            <div className="moves">
+              {FACE_NAMES.map((name, idx) => (
+                <div className="move-group" key={name}>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => applyMove(idx, 1)}
+                  >
+                    {name}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => applyMove(idx, 3)}
+                  >
+                    {name}&apos;
+                  </button>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => applyMove(idx, 2)}
+                  >
+                    {name}2
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="reset"
+              disabled={busy}
+              onClick={handleReset}
+            >
+              Azzera cubo
+            </button>
+          </div>
+
+          <div className="panel">
+            <label className="field">
+              Sottogruppo / solver:
+              <select
+                value={solverKey}
+                onChange={(e) => {
+                  setSolverKey(e.target.value);
+                  setSolutionText("");
+                  setLastSequence(null);
+                }}
+              >
+                {Object.entries(SOLVER_DEFS).map(([key, def]) => (
+                  <option key={key} value={key}>
+                    {def.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="field checkbox">
+              <input
+                type="checkbox"
+                checked={superGroup}
+                disabled={!SOLVER_DEFS[solverKey].subgroup}
+                onChange={(e) => {
+                  setSuperGroup(e.target.checked);
+                  setSolutionText("");
+                  setLastSequence(null);
+                }}
+              />
+              Super gruppo (considera l&apos;orientamento dei centri)
+            </label>
+
+            <div className="actions">
+              <button type="button" onClick={handleMix} disabled={busy}>
+                Mescola nel sottogruppo
+              </button>
+              <button type="button" onClick={handleSolve} disabled={busy}>
+                Risolvi
+              </button>
+              <button
+                type="button"
+                onClick={handleApplySolution}
+                disabled={busy || !lastSequence}
+              >
+                Applica soluzione
+              </button>
+            </div>
+
+            <p className="status">{status}</p>
+
+            {solutionText && (
+              <div className="solution">
+                <strong>Sequenza:</strong>
+                <div className="solution-text">{solutionText}</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <a
+        href="https://links-page-bennibeni.vercel.app/"
+        style={{
+          display: "inline-block",
+          padding: "10px 16px",
+          border: "1px solid #b8c7d8",
+          borderRadius: "999px",
+          background: "#fff",
+          color: "#23476b",
+          fontSize: "14px",
+          fontWeight: 600,
+          textDecoration: "none",
+          boxShadow: "0 2px 8px rgba(35, 71, 107, 0.08)",
+        }}
+      >
+        ← All projects
+      </a>
+    </main>
   );
 }
