@@ -1,0 +1,144 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #1a1a1e;
+  color: #eee;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: #999;
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.layout {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.panel {
+  background: #24242a;
+  border-radius: 12px;
+  padding: 20px;
+  flex: 1 1 380px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.view-toggle button.active {
+  background: #4a6cf7;
+  border-color: #4a6cf7;
+}
+
+.moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.move-group {
+  display: flex;
+  gap: 4px;
+}
+
+.move-group button {
+  width: 40px;
+}
+
+button {
+  background: #35353d;
+  color: #eee;
+  border: 1px solid #47474f;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button:hover:not(:disabled) {
+  background: #45454f;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.reset {
+  margin-top: 16px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+
+.field select {
+  display: block;
+  margin-top: 6px;
+  width: 100%;
+  padding: 6px;
+  background: #35353d;
+  color: #eee;
+  border: 1px solid #47474f;
+  border-radius: 6px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox input {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: #bbb;
+  min-height: 2.4em;
+}
+
+.solution {
+  background: #1a1a1e;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+}
+
+.solution-text {
+  font-family: 'Consolas', monospace;
+  margin-top: 6px;
+  word-break: break-word;
+  color: #7bd88f;
+}
