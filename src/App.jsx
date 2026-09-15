@@ -331,23 +331,9 @@ export default function App() {
           </div>
         </div>
       </div>
-      <a
-        href="https://links-page-bennibeni.vercel.app/"
-        style={{
-          display: "inline-block",
-          padding: "10px 16px",
-          border: "1px solid #b8c7d8",
-          borderRadius: "999px",
-          background: "#fff",
-          color: "#23476b",
-          fontSize: "14px",
-          fontWeight: 600,
-          textDecoration: "none",
-          boxShadow: "0 2px 8px rgba(35, 71, 107, 0.08)",
-        }}
-      >
-        ← All projects
-      </a>
+      <footer className="projects-footer">
+        <a href="https://links-page-bennibeni.vercel.app/">&larr; All projects</a>
+      </footer>
     </main>
   );
 }
