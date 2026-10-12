@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -31,7 +31,8 @@ function Sticker({ normal, colorIdx }) {
   return (
     <mesh position={[nx * STICKER_OFFSET, ny * STICKER_OFFSET, nz * STICKER_OFFSET]} rotation={rotation}>
       <planeGeometry args={[STICKER_SIZE, STICKER_SIZE]} />
-      <meshStandardMaterial color={color} side={THREE.DoubleSide} />
+      {/* Match the SVG palette exactly, independently of lights and tone mapping. */}
+      <meshBasicMaterial color={color} side={THREE.DoubleSide} toneMapped={false} />
     </mesh>
   );
 }
@@ -53,7 +54,7 @@ function Cubie({ slot, faceletColor }) {
 // ruota un gruppo di cubie da 0 all'angolo finale nell'arco di ANIMATION_DURATION_MS;
 // le coordinate delle cubie sono gia' relative al centro del cubo, quindi la rotazione
 // del group avviene correttamente attorno all'origine
-function RotatingGroup({ group, faceletColor }) {
+function RotatingGroup({ group, faceletColor, duration = ANIMATION_DURATION_MS }) {
   const ref = useRef();
   const elapsedRef = useRef(0);
   const axisVec = useMemo(
@@ -63,8 +64,8 @@ function RotatingGroup({ group, faceletColor }) {
   const angleRad = (group.angleDeg * Math.PI) / 180;
 
   useFrame((_, delta) => {
-    elapsedRef.current = Math.min(ANIMATION_DURATION_MS, elapsedRef.current + delta * 1000);
-    const t = elapsedRef.current / ANIMATION_DURATION_MS;
+    elapsedRef.current = Math.min(duration, elapsedRef.current + delta * 1000);
+    const t = elapsedRef.current / duration;
     const eased = 1 - (1 - t) ** 2; // ease-out: parte veloce, rallenta in chiusura
     if (ref.current) {
       ref.current.quaternion.setFromAxisAngle(axisVec, angleRad * eased);
@@ -80,7 +81,13 @@ function RotatingGroup({ group, faceletColor }) {
   );
 }
 
-export default function Cube3D({ faceletColor, animation }) {
+function ViewControls({ resetView }) {
+  const controls = useRef();
+  useEffect(() => { controls.current?.reset(); }, [resetView]);
+  return <OrbitControls ref={controls} enableDamping={false} enablePan={false} minDistance={4} maxDistance={12} />;
+}
+
+export default function Cube3D({ faceletColor, animation, resetView = 0 }) {
   const animatedIndices = useMemo(() => {
     if (!animation) return new Set();
     return new Set(animation.groups.flatMap((g) => g.slots));
@@ -102,9 +109,9 @@ export default function Cube3D({ faceletColor, animation }) {
         ))}
         {animation && animation.groups.map((group, i) => (
           // key include l'id dell'animazione per resettare lo stato interno ad ogni mossa
-          <RotatingGroup key={`${animation.id}-${i}`} group={group} faceletColor={faceletColor} />
+          <RotatingGroup key={`${animation.id}-${i}`} group={group} faceletColor={faceletColor} duration={animation.duration} />
         ))}
-        <OrbitControls enablePan={false} minDistance={4} maxDistance={12} />
+        <ViewControls resetView={resetView} />
       </Canvas>
     </div>
   );

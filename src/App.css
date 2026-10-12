@@ -10,7 +10,7 @@ body {
 }
 
 .app {
-  max-width: 960px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 24px 16px 64px;
 }
@@ -31,7 +31,7 @@ h1 {
   display: flex;
   gap: 32px;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .panel {
@@ -45,6 +45,17 @@ h1 {
   display: flex;
   gap: 6px;
   margin-bottom: 10px;
+}
+
+.cube-panel { flex: 2 1 700px; min-width: 0; }
+.cube-views { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; }
+.cube-views > div { max-width: 100%; }
+.circle-diagram { margin: 0; max-width: 100%; }
+.circle-diagram svg { display: block; width: 100%; height: auto; }
+.circle-diagram figcaption { text-align: center; color: #bbb; font-size: .8rem; margin-top: 8px; }
+@media (max-width: 440px) {
+  .panel { padding: 12px; min-width: 0; }
+  .app { padding-left: 10px; padding-right: 10px; }
 }
 
 .view-toggle button.active {
@@ -137,6 +148,49 @@ button:disabled {
   padding: 10px 12px;
   font-size: 0.9rem;
 }
+
+.playback-panel h2 { font-size: 1.1rem; margin-top: 0; }
+.playback-panel { min-width: 0; }
+.cube-theory { margin-top: 24px; padding-top: 20px; border-top: 1px solid #47474f; font-size: .75rem; line-height: 1.65; color: #ccc; }
+.cube-theory h2 { color: #eee; font-size: .85rem; }
+.cube-theory ul, .cube-theory ol { padding-left: 21px; }
+.cube-theory li { margin-bottom: 7px; }
+.theory-formula { padding: 10px; border-radius: 6px; background: #1a1a1e; color: #eee; font-family: Georgia, serif; overflow-wrap: anywhere; }
+.theory-total { color: #ffdc91; font-weight: 700; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.manual-play { margin-top: 24px; border-top: 1px solid #47474f; padding-top: 16px; }
+.manual-play h2 { font-size: 1.1rem; margin: 0 0 8px; }
+.manual-play p { color: #bbb; font-size: .85rem; line-height: 1.5; }
+.face-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 106px)); grid-template-areas: '. U .' 'L F R' '. D .' '. B .'; gap: 10px 8px; justify-content: center; }
+.face-L { grid-area: L; } .face-U { grid-area: U; } .face-F { grid-area: F; }
+.face-R { grid-area: R; } .face-D { grid-area: D; } .face-B { grid-area: B; }
+.face-control { text-align: center; }
+.face-control > span { display: block; font-size: .75rem; margin-bottom: 4px; }
+.face-control .move-group { justify-content: center; }
+.face-control button { width: 44px; min-height: 44px; padding: 8px; font-size: .9rem; }
+.face-control button svg { display: block; width: 24px; height: 24px; margin: auto; }
+.face-control button.suggested-move { background: #705516; border-color: #ffcf66; color: #fff3cc; outline: 2px solid #ffcf66; outline-offset: 2px; }
+.face-control button.suggested-move:hover { background: #8a6820; }
+.manual-play .hint-message { min-height: 2.8em; color: #ffdc91; }
+.diagram-option { display: flex; gap: 6px; align-items: center; margin-bottom: 14px; }
+.diagram-option .field { margin-bottom: 0; }
+.info-button { display: inline-flex; padding: 4px; border: 0; background: transparent; border-radius: 50%; }
+.diagram-help { width: min(540px, calc(100vw - 32px)); max-height: 85vh; overflow-y: auto; padding: 24px; border: 1px solid #565361; border-radius: 12px; background: #24242a; color: #eee; }
+.diagram-help::backdrop { background: rgb(0 0 0 / 70%); }
+.diagram-help p { font-size: .9rem; line-height: 1.65; color: #ccc; }
+.dialog-header { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+.dialog-header h2 { margin: 0; font-size: 1.15rem; }
+.diagram-help form { text-align: right; }
+.manual-history { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; font-size: .85rem; }
+.manual-sequence { max-height: 100px; overflow-y: auto; overflow-wrap: anywhere; font-family: Consolas, monospace; }
+.primary-action { background: #4a6cf7; border-color: #4a6cf7; }
+.primary-action:hover:not(:disabled) { background: #3858df; }
+.solution progress { width: 100%; margin-top: 12px; accent-color: #7bd88f; }
+.solution-moves { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; font-family: Consolas, monospace; }
+.solution-moves span { padding: 4px 7px; border-radius: 4px; color: #aaa; }
+.solution-moves .done { color: #7bd88f; }
+.solution-moves .current { background: #4a6cf7; color: white; }
+.credits { color: #999; font-size: .8rem; margin-top: 20px; }
+.credits a { color: #bbb; }
 
 .solution-text {
   font-family: "Consolas", monospace;

@@ -1,4 +1,4 @@
-import { cubelet2facelet } from '../cube/CubePosition';
+import { cubelet2facelet } from '../cube/CubePosition.js';
 
 // face: 0=L 1=U 2=F 3=R 4=D 5=B (stesso ordine usato ovunque nel porting)
 // Convenzione assi: x=destra(R+), y=alto(U+), z=verso l'osservatore (F+).
